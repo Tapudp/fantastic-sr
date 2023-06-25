@@ -9,3 +9,17 @@ You've been asked to refactor the function `deterministicPartitionKey` in [`dpk.
 You will be graded on the exhaustiveness and quality of your unit tests, the depth of your refactor, and the level of insight into your thought process provided by the written explanation.
 
 ## Your Explanation Here
+
+1. The function `getCandidate` has been extracted into a separate module-function. This makes the code easier to read and understand, as the logic for generating the partition key is now separated from the main function.
+- If there are no parameters i.e., `event` passed in, it detects it early before any compute and creation of any variables and returns the base value as result i.e., `"0"`
+- After this, for case when there is a partition-key available in the `event`, passed as parameter, then returns the that partition-key itself.
+- For the case apart from this, `JSON.stringify` function to convert the event object to a string. This ensures that the partition key is always a valid string, even if the event object contains non-string data.
+
+- The overall effect of the refactoring is to improve the readability, maintainability, and efficiency of the code.
+- The code is also more efficient, `JSON.stringify` on the data provided, along with a separate function module for `crypto.createHash` that returns a computed hash value.
+- The formatting types for the create-hash functions has been treated as global variables.
+```
+const ALGORITHM_TYPE_NAME = "sha3-512";
+const DIGEST_TYPE = "hex";
+```
+- These can be created as environment variables, if required. This will enable us to only make changes to one place reflect it across the code-base. 
